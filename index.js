@@ -4,7 +4,7 @@ var eos = require('end-of-stream')
 var duplexify = require('duplexify')
 var path = require('path')
 var fs = require('fs')
-var createAtomicWriteStream = require('fs-write-stream-atomic')
+var createAtomicWriteStream = require('@digidem/fs-write-stream-atomic')
 
 var noop = function() {}
 
