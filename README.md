@@ -1,4 +1,7 @@
 # atomic-fs-blob-store
+[![Build Status](https://travis-ci.com/digidem/atomic-fs-blob-store.svg?branch=master)](https://travis-ci.com/digidem/atomic-fs-blob-store)
+
+[![blob-store-compatible](https://raw.githubusercontent.com/maxogden/abstract-blob-store/master/badge.png)](https://github.com/maxogden/abstract-blob-store)
 
 [blob store](https://github.com/maxogden/abstract-blob-store) that atomically stores blobs (e.g. no partial writes) on the local file system.
 
@@ -7,10 +10,6 @@ Forked from [fs-blob-store](https://github.com/maxogden/fs-blob-store)
 ```sh
 npm install atomic-fs-blob-store
 ```
-
-[![build status](http://img.shields.io/travis/blockai/atomic-fs-blob-store.svg?style=flat)](http://travis-ci.org/blockai/atomic-fs-blob-store)
-
-[![blob-store-compatible](https://raw.githubusercontent.com/maxogden/abstract-blob-store/master/badge.png)](https://github.com/maxogden/abstract-blob-store)
 
 ## Usage
 
