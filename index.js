@@ -35,24 +35,35 @@ var BlobStore = function(opts) {
 BlobStore.prototype.createWriteStream = function(opts, cb) {
   if (typeof opts === 'string') opts = {key:opts}
   if (opts.name && !opts.key) opts.key = opts.name
+  cb = cb || function () {}
 
   var key = join(this.path, opts.key)
   var dir = path.dirname(key)
   var cache = this.cache
   var createWriteStream = this.fsCreateWriteStream
 
-  if (cache.get(dir)) return listen(createWriteStream(key, opts), opts, cb)
-
-  var proxy = listen(duplexify(), opts, cb)
-
+  var proxy = duplexify()
   proxy.setReadable(false)
 
-  mkdirp(dir, function(err) {
-    if (proxy.destroyed) return
-    if (err) return proxy.destroy(err)
-    cache.set(dir, true)
-    proxy.setWritable(createWriteStream(key, opts))
-  })
+  function setup () {
+    var w = createWriteStream(key, opts)
+    w.once('finish', function () {
+      cb(null, opts)
+    })
+    w.once('error', cb)
+    proxy.setWritable(w)
+  }
+
+  if (cache.get(dir)) {
+    setup()
+  } else {
+    mkdirp(dir, function(err) {
+      if (proxy.destroyed) return
+      if (err) return proxy.destroy(err)
+      cache.set(dir, true)
+      setup()
+    })
+  }
 
   return proxy
 }
